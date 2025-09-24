@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-import argparse, os, sys, subprocess, tempfile, json
+import argparse
+import os
+import sys
+import subprocess
+import tempfile
+import json
 from datetime import datetime, UTC
 
 # ---------------------------
@@ -259,7 +264,7 @@ def run_black(repo_path: str, apply: bool = False):
 # ---------------------------
 def write_markdown_report(summary: dict, md_path: str):
     lines = []
-    lines.append(f"# Python Project Audit Report")
+    lines.append("# Python Project Audit Report")
     lines.append("")
     lines.append(f"- **Generated:** {datetime.now(UTC).isoformat(timespec='seconds')}")
     lines.append(f"- **Repo Path:** `{summary.get('repo_path','')}`")
@@ -386,7 +391,7 @@ def main():
 
     write_markdown_report(summary, args.md_report)
 
-    print(f"✅ Audit complete.")
+    print("✅ Audit complete.")
     print(f"- Wrote JSON: {args.report}")
     print(f"- Wrote Markdown: {args.md_report}")
     if is_temp:
