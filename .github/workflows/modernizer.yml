@@ -24,12 +24,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest ruff black pyupgrade pip-audit
 
       - name: Run tests
-        run: |
-          pytest -q || true   # skip failing tests but still run pipeline
+        run: pytest -q || true # don’t fail workflow if tests fail
 
       - name: Run linting (ruff)
         run: ruff check .
@@ -41,9 +40,14 @@ jobs:
         run: |
           git init
           git add .
-          git commit -m "baseline"
+          git commit -m "baseline" || true
           pyupgrade --py311-plus $(find . -name '*.py') || true
           git diff || true
 
       - name: Run security audit
-        run: pip-audit -r requirements.txt || true
+        run: |
+          if [ -f requirements.txt ]; then
+            pip-audit -r requirements.txt || true
+          else
+            echo "No requirements.txt found, skipping security audit."
+          fi
