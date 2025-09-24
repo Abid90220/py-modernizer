@@ -1,0 +1,33 @@
+{
+  "repo_path": "/var/folders/xs/z59w57g118v32dht04blnmbc0000gn/T/repo_hsaiwdss",
+  "packaging": {
+    "has_pyproject_toml": false,
+    "has_setup_py": true,
+    "has_setup_cfg": false
+  },
+  "dependencies": {
+    "dependency_files": [
+      "requirements.txt"
+    ]
+  },
+  "tests": {
+    "test_dirs": [
+      "tests"
+    ],
+    "has_pytest_cfg": false
+  },
+  "test_run": {
+    "framework": "unittest",
+    "exit_code": 5,
+    "output": "No tests discovered. Repo may require extra dependencies."
+  },
+  "ruff": {
+    "available": true,
+    "output": "All checks passed!"
+  },
+  "pyupgrade": {
+    "available": true,
+    "applied": false,
+    "output": "pyupgrade available but not applied (use --check-fixes or --apply-fixes)."
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "repo_path": "/var/folders/xs/z59w57g118v32dht04blnmbc0000gn/T/repo_i7bete0w",
+  "packaging": {
+    "has_pyproject_toml": true,
+    "has_setup_py": false,
+    "has_setup_cfg": false
+  },
+  "dependencies": {
+    "dependency_files": [
+      "pyproject.toml",
+      "uv.lock"
+    ]
+  },
+  "tests": {
+    "test_dirs": [
+      "tests"
+    ],
+    "has_pytest_cfg": true
+  },
+  "test_run": {
+    "framework": null,
+    "output": "Test run skipped."
+  },
+  "ruff": {
+    "available": true,
+    "output": "warning: The following rules have been removed and ignoring them has no effect:\n    - UP038\n\nwarning: Invalid rule code provided to `# noqa` at src/flask/sessions.py:110: B950\nwarning: Invalid rule code provided to `# noqa` at src/flask/app.py:273: B950\nwarning: Invalid rule code provided to `# noqa` at src/flask/app.py:1480: B001\nAll checks passed!"
+  },
+  "pyupgrade": {
+    "available": true,
+    "applied": false,
+    "output": "pyupgrade available but not applied (use --apply-fixes)."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "repo_path": "/var/folders/xs/z59w57g118v32dht04blnmbc0000gn/T/repo_9hopftt4",
+  "packaging": {
+    "has_pyproject_toml": false,
+    "has_setup_py": true,
+    "has_setup_cfg": false
+  },
+  "dependencies": {
+    "dependency_files": [
+      "requirements.txt"
+    ]
+  },
+  "tests": {
+    "test_dirs": [
+      "tests"
+    ],
+    "has_pytest_cfg": false
+  },
+  "test_run": {
+    "framework": null,
+    "output": "Test run skipped."
+  },
+  "ruff": {
+    "available": true,
+    "output": "All checks passed!"
+  },
+  "pyupgrade": {
+    "available": true,
+    "applied": true,
+    "output": "Rewriting /var/folders/xs/z59w57g118v32dht04blnmbc0000gn/T/repo_9hopftt4/setup.py"
+  }
+}

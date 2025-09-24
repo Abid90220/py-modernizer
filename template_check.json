@@ -1,0 +1,32 @@
+{
+  "repo_path": "/var/folders/xs/z59w57g118v32dht04blnmbc0000gn/T/repo_tyjeq1o5",
+  "packaging": {
+    "has_pyproject_toml": false,
+    "has_setup_py": true,
+    "has_setup_cfg": false
+  },
+  "dependencies": {
+    "dependency_files": [
+      "requirements.txt"
+    ]
+  },
+  "tests": {
+    "test_dirs": [
+      "tests"
+    ],
+    "has_pytest_cfg": false
+  },
+  "test_run": {
+    "framework": null,
+    "output": "Test run skipped."
+  },
+  "ruff": {
+    "available": true,
+    "output": "All checks passed!"
+  },
+  "pyupgrade": {
+    "available": true,
+    "applied": false,
+    "output": "diff --git a/setup.py b/setup.py\nindex 7547627..7d2a939 100644\n--- a/setup.py\n+++ b/setup.py\n@@ -13,7 +13,7 @@ def read(*paths, **kwargs):\n     \"\"\"\n \n     content = \"\"\n-    with io.open(\n+    with open(\n         os.path.join(os.path.dirname(__file__), *paths),\n         encoding=kwargs.get(\"encoding\", \"utf8\"),\n     ) as open_file:"
+  }
+}
