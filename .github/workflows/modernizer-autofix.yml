@@ -33,7 +33,11 @@ jobs:
         run: black .
 
       - name: Run Pyupgrade
-        run: pyupgrade --py311-plus $(find . -name '*.py')
+        run: |
+          set -e
+          for file in $(git ls-files '*.py'); do
+          pyupgrade --py311-plus "$file" || true
+          done
 
       - name: Commit and push changes
         if: matrix.python-version == '3.11' # commit only once (not on every version)
