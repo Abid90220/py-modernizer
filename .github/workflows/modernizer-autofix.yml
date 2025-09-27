@@ -48,20 +48,59 @@ jobs:
       # -------------------
       # Dependency Upgrades
       # -------------------
-      - name: Upgrade dependencies (requirements or pyproject)
+      - name: Upgrade dependencies
+        shell: bash
         run: |
-          if [ -f pyproject.toml ]; then
-            echo "Detected pyproject.toml → upgrading with Poetry..."
-            poetry update || true
+          set -e
+          python -m pip install --upgrade pip
+          pip install pip-tools pur toml
+
+          # 1) requirements.in / requirements.txt
+          if [ -f requirements.in ]; then
+            echo "requirements.in detected — compiling and upgrading..."
+            pip-compile --upgrade --allow-unsafe
+            pip install -r requirements.txt
+
           elif [ -f requirements.txt ]; then
-            echo "Detected requirements.txt → upgrading with pur/pip-tools..."
+            echo "requirements.txt detected — upgrading in place..."
             pur -r requirements.txt || true
-            if [ -f requirements.in ]; then
-              pip-compile --upgrade requirements.in || true
+            pip install -r requirements.txt
+
+          # 2) pyproject.toml (PEP 621)
+          elif [ -f pyproject.toml ]; then
+            echo "pyproject.toml detected — upgrading declared dependencies..."
+            python <<'PY'
+
+          import subprocess, sys
+            try:
+                import toml  # installed above, but be defensive
+            except Exception:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "toml"])
+                import toml
+
+          data = toml.load("pyproject.toml")
+
+            deps = []
+            if "project" in data:
+                proj = data["project"]
+                if "dependencies" in proj:
+                    deps.extend(proj["dependencies"])
+                if "optional-dependencies" in proj:
+                    for group in proj["optional-dependencies"].values():
+                        deps.extend(group)
+
+            for dep in deps:
+            pkg = dep.split()[0]
+            subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade", pkg])
+
+
+            elif [ -f setup.py ]; then
+            echo "setup.py detected — editable install (no lock file to upgrade)..."
+            pip install -e . || true
+
+            else
+            echo "No recognized dependency file found."
             fi
-          else
-            echo "⚠️ No dependency file found, skipping."
-          fi
 
       # -------------------
       # Commit & Push Changes
