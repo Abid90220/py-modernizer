@@ -27,7 +27,7 @@ jobs:
       - name: Install tools
         run: |
           python -m pip install --upgrade pip
-          pip install ruff black pyupgrade pip-tools pur poetry
+          pip install ruff black pyupgrade pip-tools pur toml
 
       # -------------------
       # Code Modernization
@@ -70,15 +70,14 @@ jobs:
           elif [ -f pyproject.toml ]; then
             echo "pyproject.toml detected — upgrading declared dependencies..."
             python <<'PY'
-
-          import subprocess, sys
+            import subprocess, sys
             try:
-                import toml  # installed above, but be defensive
-            except Exception:
+                import toml
+            except ImportError:
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "toml"])
                 import toml
 
-          data = toml.load("pyproject.toml")
+            data = toml.load("pyproject.toml")
 
             deps = []
             if "project" in data:
@@ -90,17 +89,18 @@ jobs:
                         deps.extend(group)
 
             for dep in deps:
-            pkg = dep.split()[0]
-            subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade", pkg])
+                pkg = dep.split()[0]
+                subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade", pkg])
+            PY
 
-
-            elif [ -f setup.py ]; then
+          # 3) setup.py
+          elif [ -f setup.py ]; then
             echo "setup.py detected — editable install (no lock file to upgrade)..."
             pip install -e . || true
 
-            else
+          else
             echo "No recognized dependency file found."
-            fi
+          fi
 
       # -------------------
       # Commit & Push Changes
